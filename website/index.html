@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Universal App Hub is a professional app-launching and multitasking workspace for web and Android.">
+  <title>Universal App Hub</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231e40af'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffffff'/%3E%3C/svg%3E">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Primary">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div>
+          <p class="brand-name">Universal App Hub</p>
+          <p class="brand-tag">Multitasking workspace</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Workspace">
+        <button class="nav-item is-active" data-view="dashboard" type="button">Dashboard</button>
+        <button class="nav-item" data-view="library" type="button">App library</button>
+        <button class="nav-item" data-view="favourites" type="button">Favourites</button>
+        <button class="nav-item" data-view="recents" type="button">Recently opened</button>
+        <button class="nav-item" data-view="companion" type="button">Android companion</button>
+        <button class="nav-item" data-view="settings" type="button">Settings</button>
+      </nav>
+
+      <div class="sidebar-status">
+        <p class="status-label">Workspace</p>
+        <p class="status-value" id="sidebar-status">Inactive</p>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="search-wrap">
+          <label class="visually-hidden" for="search">Search apps</label>
+          <input id="search" type="search" placeholder="Search shortcuts..." autocomplete="off">
+        </div>
+
+        <div class="topbar-actions">
+          <label class="activate-toggle">
+            <span>Activate Workspace</span>
+            <input type="checkbox" id="activate-workspace" role="switch" aria-checked="false">
+            <span class="switch" aria-hidden="true"></span>
+          </label>
+          <button class="primary-btn" id="add-app-btn" type="button">Add app</button>
+        </div>
+      </header>
+
+      <main id="main">
+        <section class="view is-visible" id="view-dashboard" aria-labelledby="dash-title">
+          <div class="page-head">
+            <div>
+              <h1 id="dash-title">Dashboard</h1>
+              <p class="lede" id="welcome-text">Organize shortcuts and keep your current activity close when the platform allows it.</p>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <article class="stat-card">
+              <p class="stat-label">Library</p>
+              <p class="stat-number" id="stat-library">0</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">Favourites</p>
+              <p class="stat-number" id="stat-favourites">0</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">Recently opened</p>
+              <p class="stat-number" id="stat-recents">0</p>
+            </article>
+            <article class="stat-card" id="stat-workspace-card">
+              <p class="stat-label">Activation</p>
+              <p class="stat-number" id="stat-workspace">Off</p>
+            </article>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <h2>How the workspace works</h2>
+            </div>
+            <ol class="journey">
+              <li>Add website URLs or supported app links to your library.</li>
+              <li>Turn on Activate Workspace to show the floating Hub control.</li>
+              <li>Open a shortcut from the dashboard, library, or Hub menu.</li>
+              <li>Return to this tab or your previous Android app using normal navigation when the OS permits it.</li>
+            </ol>
+            <p class="note">The Hub is a launcher overlay, not an embedded copy of another app. State preservation depends on the browser, Android, and the destination app.</p>
+          </div>
+
+          <div class="two-col">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Favourites</h2>
+                <button class="text-btn" data-view="favourites" type="button">View all</button>
+              </div>
+              <div class="card-grid" id="dash-favourites"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <h2>Recently opened</h2>
+                <button class="text-btn" data-view="recents" type="button">View all</button>
+              </div>
+              <div class="card-grid" id="dash-recents"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-library" hidden aria-labelledby="library-title">
+          <div class="page-head">
+            <div>
+              <h1 id="library-title">App library</h1>
+              <p class="lede">Shortcuts you can open from the dashboard or the floating Hub.</p>
+            </div>
+            <button class="primary-btn" data-open-add type="button">Add app</button>
+          </div>
+          <div class="filters" role="group" aria-label="Filter by category">
+            <button class="chip is-active" data-category="all" type="button">All</button>
+            <button class="chip" data-category="productivity" type="button">Productivity</button>
+            <button class="chip" data-category="communication" type="button">Communication</button>
+            <button class="chip" data-category="media" type="button">Media</button>
+            <button class="chip" data-category="social" type="button">Social</button>
+            <button class="chip" data-category="utilities" type="button">Utilities</button>
+            <button class="chip" data-category="custom" type="button">Custom</button>
+          </div>
+          <div class="card-grid" id="library-grid"></div>
+        </section>
+
+        <section class="view" id="view-favourites" hidden aria-labelledby="fav-title">
+          <div class="page-head">
+            <div>
+              <h1 id="fav-title">Favourites</h1>
+              <p class="lede">Pinned shortcuts appear first in the Hub menu.</p>
+            </div>
+          </div>
+          <div class="card-grid" id="favourites-grid"></div>
+        </section>
+
+        <section class="view" id="view-recents" hidden aria-labelledby="recents-title">
+          <div class="page-head">
+            <div>
+              <h1 id="recents-title">Recently opened</h1>
+              <p class="lede">Your last shortcuts, restored from this device.</p>
+            </div>
+            <button class="ghost-btn" id="clear-recents" type="button">Clear recents</button>
+          </div>
+          <div class="card-grid" id="recents-grid"></div>
+        </section>
+
+        <section class="view" id="view-companion" hidden aria-labelledby="companion-title">
+          <div class="page-head">
+            <div>
+              <h1 id="companion-title">Android companion</h1>
+              <p class="lede">Install the native app for overlay Hub controls and installed-app launching.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <h2>Install and connect</h2>
+            <ol class="journey">
+              <li>Open the <code>android/UniversalAppHub</code> project in Android Studio.</li>
+              <li>Build a debug APK or run the app on a physical device (recommended for overlay testing).</li>
+              <li>Launch Universal App Hub on the device and read the overlay permission explanation.</li>
+              <li>If you choose to continue, grant “Display over other apps” in Android settings.</li>
+              <li>Turn on Activate Workspace in the companion. A movable Hub button appears when overlays are allowed.</li>
+              <li>Open another supported app, tap the Hub, and choose a shortcut. Use Recents or Back to return when Android preserves the previous task.</li>
+            </ol>
+            <p class="note">This website stores preferences locally in your browser. The Android app stores its own workspace on the device. Secure cross-device sync is designed for a later release and is not active yet.</p>
+          </div>
+          <div class="panel">
+            <h2>What the companion does</h2>
+            <ul class="plain-list">
+              <li>Launches supported installed applications with standard intents and deep links.</li>
+              <li>Shows a user-controlled floating Hub when overlay permission is granted.</li>
+              <li>Does not embed another app’s full interface inside the Hub menu.</li>
+              <li>Does not bypass overlay restrictions, capture other apps’ screens, or inject input.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="view" id="view-settings" hidden aria-labelledby="settings-title">
+          <div class="page-head">
+            <div>
+              <h1 id="settings-title">Settings</h1>
+              <p class="lede">Preferences stay on this device in local storage.</p>
+            </div>
+          </div>
+          <form class="panel settings-form" id="settings-form">
+            <label>
+              Display name
+              <input type="text" id="setting-name" maxlength="40" placeholder="Your name">
+            </label>
+            <label>
+              Appearance
+              <select id="setting-theme">
+                <option value="dark">Dark (navy)</option>
+                <option value="light">Light</option>
+              </select>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="setting-restore">
+              Restore workspace (Hub position and activation) when this page loads
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="setting-confirm-launch">
+              Confirm before opening a shortcut in a new tab
+            </label>
+            <div class="form-actions">
+              <button class="primary-btn" type="submit">Save settings</button>
+              <button class="ghost-btn" id="reset-workspace" type="button">Reset library to defaults</button>
+              <button class="ghost-btn danger" id="export-data" type="button">Export JSON</button>
+              <label class="ghost-btn file-btn">
+                Import JSON
+                <input type="file" id="import-data" accept="application/json">
+              </label>
+            </div>
+            <p class="form-status" id="settings-status" role="status"></p>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+  <div class="modal" id="app-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modal-title">Add app</h2>
+        <button class="icon-btn" id="modal-close" type="button" aria-label="Close">×</button>
+      </div>
+      <form id="app-form">
+        <input type="hidden" id="app-id">
+        <label>
+          Name
+          <input type="text" id="app-name" required maxlength="60" placeholder="Gmail">
+        </label>
+        <label>
+          Website URL or app link
+          <input type="url" id="app-url" required placeholder="https://mail.google.com">
+        </label>
+        <label>
+          Optional Android package
+          <input type="text" id="app-package" maxlength="120" placeholder="com.google.android.gm" pattern="[A-Za-z][A-Za-z0-9._]*" title="Java-style package name">
+        </label>
+        <label>
+          Category
+          <select id="app-category" required>
+            <option value="productivity">Productivity</option>
+            <option value="communication">Communication</option>
+            <option value="media">Media</option>
+            <option value="social">Social</option>
+            <option value="utilities">Utilities</option>
+            <option value="custom">Custom</option>
+          </select>
+        </label>
+        <label>
+          Icon letter or emoji
+          <input type="text" id="app-icon" maxlength="4" placeholder="G">
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="app-favourite">
+          Add to favourites
+        </label>
+        <p class="field-hint">Use https website URLs, or supported app links such as mailto: and market://. The Android companion can also launch by package name when the app is installed.</p>
+        <div class="form-actions">
+          <button class="primary-btn" type="submit">Save shortcut</button>
+          <button class="ghost-btn" id="modal-cancel" type="button">Cancel</button>
+        </div>
+        <p class="form-status" id="form-status" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <button class="hub-fab" id="hub-fab" type="button" hidden aria-label="Open Hub menu" aria-expanded="false">Hub</button>
+  <div class="hub-menu" id="hub-menu" hidden>
+    <div class="hub-menu-head">
+      <p>Quick access</p>
+      <button type="button" id="hub-close" aria-label="Close Hub menu">Close</button>
+    </div>
+    <p class="hub-section-label">Favourites</p>
+    <div id="hub-favourites"></div>
+    <p class="hub-section-label">Recently opened</p>
+    <div id="hub-recents"></div>
+    <p class="hub-footnote">Opens a shortcut. This is not an embedded app window.</p>
+  </div>
+  <div class="hub-scrim" id="hub-scrim" hidden></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
